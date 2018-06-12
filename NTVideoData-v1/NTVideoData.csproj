@@ -169,7 +169,6 @@
     <Compile Include="Utils\UIUtil.cs" />
     <Compile Include="Utils\UnicodeUtil.cs" />
     <Compile Include="Utils\UriUtil.cs" />
-    <Compile Include="Utils\WebDriverHelper.cs" />
     <Compile Include="Utils\WebParserUtil.cs" />
     <Compile Include="Victims\BaseVictim.cs" />
     <Compile Include="Victims\TvHayOrg.cs" />
@@ -217,12 +216,6 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\jeff-projects\servers\selenium\AutomatedTester.BrowserMob-master\AutomatedTester.BrowserMob\AutomatedTester.BrowserMob.csproj">
-      <Project>{a8c349fd-5720-40c2-9a63-f4a57f0fa5db}</Project>
-      <Name>AutomatedTester.BrowserMob</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Entities\MainModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MainModel.edmx</DependentUpon>
@@ -233,6 +226,7 @@
       <DependentUpon>MainModel.edmx</DependentUpon>
       <LastGenOutput>MainModel.cs</LastGenOutput>
     </Content>
+    <Content Include="ReleaseNotes.css" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

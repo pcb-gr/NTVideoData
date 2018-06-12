@@ -54,15 +54,15 @@ namespace NTVideoData
             {0, "Tất cả"},
             {1, "Phim lẻ"},
             {2, "Phim bộ"},
-            {3, "Phim 2017"}
+            {3, "Phim mới"}
         };
 
         Dictionary<object, string> VICTIM_INSTANCE = new Dictionary<object, string>()
         {
-            //{new TvHayOrg(), "TvHayOrg"},
             {new PhimbathuVictim(), "Phim Bất Hủ"},
             {new PhimMoiVictim(), "Phim Mới"},
-            {new BilutvVictim(), "Bilutv"}
+            {new BilutvVictim(), "Bilutv"},
+            {new TvHayOrg(), "TvHayOrg"}
         };
 
         private void PopulateDataToCombobox()

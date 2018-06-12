@@ -24,8 +24,7 @@ namespace NTVideoData_v1.Test
         [Test]
         public void loadPageTest()
         {
-            WebDriverHelper.singleton().ExampleUse();
-            driver.Url = "http://www.demoqa.com";
+            
         }
 
         [TearDown]

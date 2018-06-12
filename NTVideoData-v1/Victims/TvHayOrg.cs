@@ -20,19 +20,20 @@ namespace NTVideoData.Victims
             victimDomain = "tvhay.org";
             victimDomainNoExt = victimDomain.Split('.')[0];
             victimMediaDomain = "";
-            victimTypeNo = 0;
+            victimTypeNo = 3;
             victimMediaController += victimTypeNo + "/";
             destToGetUrls[0] = protocol + victimDomain + "/phim-moi/";
             destToGetUrls[1] = protocol + victimDomain + "/phim-le/";
             destToGetUrls[2] = protocol + victimDomain + "/phim-bo/";
+            destToGetUrls[3] = protocol + victimDomain + "/phim-moi/";
             pageIndexParam = "page/";
         }
 
         public override HtmlNodeCollection getItemsInPage(int pageIndex)
         {
             currentDestToGetUrl = currentDestToGetUrl.Substring(0, currentDestToGetUrl.LastIndexOf("/") + 1) + pageIndex;
-            var ul = WebParserUtil.selectNodes(currentDestToGetUrl, "//div[@class='left-content'] //ul");
-            return ul[0].SelectNodes(".//a");
+            var ul = WebParserUtil.selectNodes(currentDestToGetUrl, "//ul[@class='list-film']");
+            return ul[0].SelectNodes(".//li");
         }
 
         public override void doGetListItemsInfo(int pageIndex)
@@ -46,7 +47,7 @@ namespace NTVideoData.Victims
                     {
                         Thread.Sleep(10);
                     }
-                    string href = items[j].Attributes["href"].Value;
+                    string href = items[j].SelectNodes(".//a")[0].Attributes["href"].Value;
                     movie movieItemInfo = getMovieItemInfo(UriUtil.checkAndAddDomain(href, victimDomain, protocol));
                     if (movieItemInfo == null) continue;
                     saveNewMovie(movieItemInfo);
@@ -90,31 +91,29 @@ namespace NTVideoData.Victims
 
         public override bool checkIgnoreMovie(HtmlNode victimDetailContent)
         {
-            HtmlNodeCollection dd = victimDetailContent.SelectNodes(".//ul[@class='meta-data'] //li");
-            if (dd == null) return true;
-            var countries = string.Join(",", convertNodesToArray(dd[dd.Count - 7].SelectNodes("./a")));
-            if (countries.IndexOf("việt nam") != -1) return true;
-            return false;
+            HtmlNodeCollection dd = victimDetailContent.SelectNodes(".//div[@class='blockbody']");
+            return (dd == null);
         }
 
         public override bool is404(HtmlNode victimDetailContent)
         {
             if (victimDetailContent == null) return true;
-            HtmlNodeCollection dd = victimDetailContent.SelectNodes("//ul[@class='meta-data'] //li");
+            HtmlNodeCollection dd = victimDetailContent.SelectNodes(".//div[@class='blockbody']");
             return (dd == null);
         }
 
         public override movie getMovie(HtmlNode victimDetailContent)
         {
-            HtmlNodeCollection dd = victimDetailContent.SelectNodes("//ul[@class='meta-data'] //li");
-            var currentMovieInfo = dd[0].SelectSingleNode("./strong").InnerText.Trim().ToLower().Replace("bản đẹp", "HD").ToLower();
-            var title = UnicodeUtil.replaceSpecialCharacter(victimDetailContent.SelectSingleNode("//div[@class='left-content'] //h1[@class='name']").InnerText.Trim());
-            var secondTitle = UnicodeUtil.replaceSpecialCharacter(victimDetailContent.SelectSingleNode("//div[@class='left-content'] //h2[@class='real-name']").InnerText.Trim());
+            HtmlNode blockbody = victimDetailContent.SelectSingleNode(".//div[@class='blockbody']");
+            HtmlNodeCollection dd = blockbody.SelectNodes("//dd");
+            var currentMovieInfo = dd[0].InnerText.Trim().ToLower().Replace("bản đẹp", "HD").ToLower();
+            var title = UnicodeUtil.replaceSpecialCharacter(blockbody.SelectSingleNode(".//h1").InnerText).Trim();
+            var secondTitle = UnicodeUtil.replaceSpecialCharacter(blockbody.SelectSingleNode(".//h3").InnerText.Trim());
             var alias = UnicodeUtil.convertToAlias(title + ((secondTitle != "") ? ( "-" + secondTitle) : ""));
             int isMultipleEpisode = (currentMovieInfo.IndexOf("tập") != -1 || currentMovieInfo.IndexOf("/") != -1) ? 1 : 0;
             var publishYear = 0;
             try {
-                publishYear = Int32.Parse(dd[dd.Count - 4].SelectSingleNode("./span").InnerText.Trim().Replace("Năm xuất bản:", "").Trim());
+                publishYear = int.Parse(title.Split('(')[1].Trim());
             } catch (Exception ex) { Console.Write(ex.Message); }
 
             movie newMovie = new movie()
@@ -136,25 +135,28 @@ namespace NTVideoData.Victims
             try
             {
                 if (checkIgnoreMovie(victimDetailContent)) return null;
-                var dd = victimDetailContent.SelectNodes("//ul[@class='meta-data'] //li");
-                var currentMovieInfo = dd[0].SelectSingleNode("./strong").InnerText.Trim().ToLower().Replace("bản đẹp", "HD").ToLower();
-                var smallImage = victimDetailContent.SelectSingleNode("//div[@class='poster'] //img").Attributes["src"].Value;
+                HtmlNode blockbody = victimDetailContent.SelectSingleNode(".//div[@class='blockbody']");
+                HtmlNodeCollection dd = blockbody.SelectNodes("//dd");
+                var currentMovieInfo = dd[0].InnerText.Trim().ToLower().Replace("bản đẹp", "HD").ToLower();
+                var smallImage = blockbody.SelectSingleNode(".//div[@class='poster'] //img").Attributes["src"].Value;
                 if (smallImage.IndexOf(victimDomainNoExt) != -1)
                 {
                     smallImage = UriUtil.getUrlNoDomain(smallImage);
                 }
-                var movieHref = UriUtil.checkAndAddDomain(victimDetailContent.SelectSingleNode(".//a[@class='btn-see btn btn-danger']").Attributes["href"].Value, victimDomain, protocol);
+                var movieHref = UriUtil.checkAndAddDomain(blockbody.SelectSingleNode(".//a[@class='btn-watch']").Attributes["href"].Value, victimDomain, protocol);
                 var totalEpisode = 1;
                 var isContinue = 0;
-                var duration = dd[dd.Count - 6].SelectSingleNode("./span").InnerText.Trim();
-                int isMultipleEpisode = (duration.IndexOf("tập") != -1 || duration.IndexOf("/") != -1) ? 1 : 0;
+                var duration = dd[dd.Count - 2].InnerText.Trim();
+                int isMultipleEpisode = (duration.ToLower().IndexOf("tập") != -1 || duration.IndexOf("/") != -1) ? 1 : 0;
                 int currentEpisode = 0;
                 int viewed = 999;
-                try { viewed = Int32.Parse(dd[dd.Count - 5].SelectSingleNode("./span").InnerText.Trim().Replace(".", "").Trim()); } catch (Exception ex) { Console.Write(ex.Message); }
+                try { viewed = Int32.Parse(dd[dd.Count - 1].InnerText.Trim().Replace(".", "").Trim()); } catch (Exception ex) { Console.Write(ex.Message); }
                 var rating = 9D;
-                try { rating = NumberUtil.GetDouble(victimDetailContent.SelectSingleNode("//span[@itempop='ratingValue']").InnerText.Trim()); } catch (Exception ex) { Console.Write(ex.Message); }
-                var schedule = victimDetailContent.SelectSingleNode("//div[@class='broadcast']");
-                var priority = Int32.Parse(smallImage.Split('/')[3]);
+                //try { rating = NumberUtil.GetDouble(victimDetailContent.SelectSingleNode("//span[@itempop='ratingValue']").InnerText.Trim()); } catch (Exception ex) { Console.Write(ex.Message); }
+                var schedule = "";
+                //var schedule = victimDetailContent.SelectSingleNode("//div[@class='broadcast']");
+                var priority = 1;
+                //var priority = Int32.Parse(smallImage.Split('/')[3]);
                
                 if (isMultipleEpisode == 1)
                 {
@@ -181,9 +183,9 @@ namespace NTVideoData.Victims
                         }
                     }
                 }
-                var description = victimDetailContent.SelectSingleNode("//div[@class='film-content']");
+                var description = victimDetailContent.SelectSingleNode("//div[@class='tabs-content'] //p");
                 description.InnerHtml = removeTextNodes(description, "h3");
-                enhanceDescription(description);
+                //enhanceDescription(description);
                 var playListHtml = getPlayListHtml(movieHref);
                 if (playListHtml == null) return null;
                 victim vtm = new victim()
@@ -191,8 +193,8 @@ namespace NTVideoData.Victims
                     name = victimDomain,
                     movieHref = movieHref,
                     thumb = CryptoUtil.encrypt(smallImage),
-                    poster = CryptoUtil.encrypt(smallImage.Replace("/240/", "/600/")),
-                    smallImage = CryptoUtil.encrypt(smallImage.Replace("/240/", "/150/")),
+                    poster = CryptoUtil.encrypt(smallImage),
+                    smallImage = CryptoUtil.encrypt(smallImage),
                     description = description.InnerHtml,
                     currentEpisode = currentEpisode,
                     totalEpisode = totalEpisode,
@@ -206,7 +208,7 @@ namespace NTVideoData.Victims
                     updateState = 1,
                     viewed = viewed,
                     rating = rating,
-                    schedule = (schedule != null) ? replaceDomain(schedule.InnerHtml) : "",
+                    schedule = (schedule != null) ? replaceDomain(schedule) : "",
                     victimTypeNo = victimTypeNo,
                     priority = priority,
                     isTrailer = isTrailer(victimDetailContent) ? 1 : 0,
@@ -225,8 +227,9 @@ namespace NTVideoData.Victims
         public override ICollection<category> getCategories(HtmlNode victimDetailContent)
         {
             string[] ignoreCats = { "long-tieng", "thuyet-minh", "han-quoc", "movie-trailers", "" };
-            var dd = victimDetailContent.SelectNodes("//ul[@class='meta-data'] //li");
-            var genres = convertNodesToArray(dd[dd.Count - 8].SelectNodes("./a"));
+            HtmlNode blockbody = victimDetailContent.SelectSingleNode(".//div[@class='blockbody']");
+            HtmlNodeCollection dd = blockbody.SelectNodes("//dd");
+            var genres = dd[dd.Count - 4].InnerText.Split(',');
             ICollection<category> cats = new HashSet<category>();
             foreach(var genre in genres)
             {
@@ -254,8 +257,9 @@ namespace NTVideoData.Victims
 
         public override ICollection<actor> getActors(HtmlNode victimDetailContent)
         {
-            var dd = victimDetailContent.SelectNodes("//ul[@class='meta-data'] //li");
-            string[] actors = convertNodesToArray(dd[dd.Count - 9].SelectNodes("./a"));
+            HtmlNode blockbody = victimDetailContent.SelectSingleNode(".//div[@class='blockbody']");
+            HtmlNodeCollection dd = blockbody.SelectNodes("//dd");
+            string[] actors = dd[dd.Count - 5].InnerText.Split(',');
             ICollection<actor> acts = new HashSet<actor>();
             
             foreach (var actor in actors)
@@ -282,8 +286,9 @@ namespace NTVideoData.Victims
 
         public override ICollection<director> getDirectors(HtmlNode victimDetailContent)
         {
-            var dd = victimDetailContent.SelectNodes("//ul[@class='meta-data'] //li");
-            var directors = convertNodesToArray(dd[dd.Count - 10].SelectNodes("./a"));
+            HtmlNode blockbody = victimDetailContent.SelectSingleNode(".//div[@class='blockbody']");
+            HtmlNodeCollection dd = blockbody.SelectNodes("//dd");
+            var directors = dd[dd.Count - 6].InnerText.Split(',');
             ICollection<director> dirs = new HashSet<director>();
             foreach (var director in directors)
             {
@@ -311,8 +316,9 @@ namespace NTVideoData.Victims
 
         public override ICollection<country> getCountries(HtmlNode victimDetailContent)
         {
-            var dd = victimDetailContent.SelectNodes("//ul[@class='meta-data'] //li");
-            var countries = convertNodesToArray(dd[dd.Count - 7].SelectNodes("./a"));
+            HtmlNode blockbody = victimDetailContent.SelectSingleNode(".//div[@class='blockbody']");
+            HtmlNodeCollection dd = blockbody.SelectNodes("//dd");
+            var countries = dd[dd.Count - 3].InnerText.Split(',');
             ICollection<country> couns = new HashSet<country>();
             foreach (var country in countries)
             {
@@ -342,9 +348,9 @@ namespace NTVideoData.Victims
         {
             List<string> rs = new List<string>();
             var movieWatchPage = getRootNode(movieHref);
-            HtmlNode playListHtmlNode = movieWatchPage.SelectSingleNode("//div[@class='list-server']");
-            rs.Add((playListHtmlNode != null) ? playListHtmlNode.OuterHtml : movieWatchPage.SelectSingleNode("//div[@id='block-player']").PreviousSibling.Attributes["src"].Value);
-            rs.Add("");
+            HtmlNodeCollection playListHtmlNodes = movieWatchPage.SelectNodes("//div[@class='serverlist'] //ul[@class='episodelist']");
+            rs.Add((playListHtmlNodes.Count > 0) ? playListHtmlNodes[0].OuterHtml : movieHref);
+            rs.Add((playListHtmlNodes.Count > 1) ? playListHtmlNodes[1].OuterHtml : movieHref);
             return rs;
         }
 
@@ -441,39 +447,164 @@ namespace NTVideoData.Victims
 
         public override bool isTrailer(HtmlNode victimDetailContent)
         {
-            HtmlNodeCollection dd = victimDetailContent.SelectNodes("//ul[@class='meta-data'] //li");
-            var currentMovieInfo = dd[0].SelectSingleNode("./strong").InnerText.Trim();
-            return (currentMovieInfo.ToLower().IndexOf("trailer") != -1);
+            return false;
         }
 
         public override void checkToAddOrUpdateProposeMovies(movie movieItemInfo)
         {
+            var homePageContent = getHomePageContent();
+            if (homePageContent == null) return;
+            var proposeMovieItems = homePageContent.SelectNodes(".//ul[@class='listfilm overview'] //li");
+            if (proposeMovieItems == null) return;
+            if (isExistPositionType(movieItemInfo, proposeMovieItems, ".//div[@class='name'] //a"))
+            {
+                home_page_position proposeMovie = (home_page_position)movieItemInfo.home_page_position.FirstOrDefault(a => a.positionType == 0);
+                if (proposeMovie == null)
+                {
+                    movieItemInfo.home_page_position.Add(new home_page_position()
+                    {
+                        positionType = 0,
+                        movieId = movieItemInfo.movieId,
+                        description = "ProposeMovie",
+                        dateUpdate = DateTime.Now
+                    });
+                }
+                else
+                {
+                    proposeMovie.dateUpdate = DateTime.Now;
+                }
 
+            }
         }
 
         public override void checkToAddOrUpdateOneEpisodeHostWeekMovies(movie movieItemInfo)
         {
+            var homePageContent = getHomePageContent();
+            var weekMultiEpisodeMovieItems = homePageContent.SelectNodes(".//div[@class='tab phim-le hide'] //ul[@class='list-film'] //li");
+            if (weekMultiEpisodeMovieItems == null) return;
+            if (isExistPositionType(movieItemInfo, weekMultiEpisodeMovieItems, ".//div[@class='name'] //a"))
+            {
+                home_page_position weekMultiEpisodeMovie = (home_page_position)movieItemInfo.home_page_position.FirstOrDefault(a => a.positionType == 2);
+                if (weekMultiEpisodeMovie == null)
+                {
+                    movieItemInfo.home_page_position.Add(new home_page_position()
+                    {
+                        positionType = 1,
+                        movieId = movieItemInfo.movieId,
+                        description = "OneEpisodeHostWeekMovie",
+                        dateUpdate = DateTime.Now
+                    });
+                }
+                else
+                {
+                    weekMultiEpisodeMovie.dateUpdate = DateTime.Now;
+                }
 
+            }
         }
 
         public override void checkToAddOrUpdateMultiEpisodeHostWeekMovies(movie movieItemInfo)
         {
+            var homePageContent = getHomePageContent();
+            var weekMultiEpisodeMovieItems = homePageContent.SelectNodes(".//div[@class='tab phim-bo hide'] //ul[@class='list-film'] //li");
+            if (weekMultiEpisodeMovieItems == null) return;
+            if (isExistPositionType(movieItemInfo, weekMultiEpisodeMovieItems, ".//div[@class='name'] //a"))
+            {
+                home_page_position weekMultiEpisodeMovie = (home_page_position)movieItemInfo.home_page_position.FirstOrDefault(a => a.positionType == 2);
+                if (weekMultiEpisodeMovie == null)
+                {
+                    movieItemInfo.home_page_position.Add(new home_page_position()
+                    {
+                        positionType = 2,
+                        movieId = movieItemInfo.movieId,
+                        description = "MultiEpisodeHostWeekMovie",
+                        dateUpdate = DateTime.Now
+                    });
+                }
+                else
+                {
+                    weekMultiEpisodeMovie.dateUpdate = DateTime.Now;
+                }
 
+            }
         }
 
         public override void checkToAddOrUpdateCinemaMovies(movie movieItemInfo)
         {
+            var homePageContent = getHomePageContent();
+            var weekMultiEpisodeMovieItems = homePageContent.SelectNodes(".//div[@class='tab phim-le hide'] //ul[@class='list-film'] //li");
+            if (weekMultiEpisodeMovieItems == null) return;
+            if (isExistPositionType(movieItemInfo, weekMultiEpisodeMovieItems, ".//div[@class='name'] //a"))
+            {
+                home_page_position weekMultiEpisodeMovie = (home_page_position)movieItemInfo.home_page_position.FirstOrDefault(a => a.positionType == 2);
+                if (weekMultiEpisodeMovie == null)
+                {
+                    movieItemInfo.home_page_position.Add(new home_page_position()
+                    {
+                        positionType = 3,
+                        movieId = movieItemInfo.movieId,
+                        description = "cinemaMovies",
+                        dateUpdate = DateTime.Now
+                    });
+                }
+                else
+                {
+                    weekMultiEpisodeMovie.dateUpdate = DateTime.Now;
+                }
 
+            }
         }
 
         public override void checkToAddOrUpdateOneEpisodeLastestUpdatedMovies(movie movieItemInfo)
         {
+            var homePageContent = getHomePageContent();
+            var weekMultiEpisodeMovieItems = homePageContent.SelectNodes(".//div[@class='tab phim-le hide'] //ul[@class='list-film'] //li");
+            if (weekMultiEpisodeMovieItems == null) return;
+            if (isExistPositionType(movieItemInfo, weekMultiEpisodeMovieItems, ".//div[@class='name'] //a"))
+            {
+                home_page_position weekMultiEpisodeMovie = (home_page_position)movieItemInfo.home_page_position.FirstOrDefault(a => a.positionType == 2);
+                if (weekMultiEpisodeMovie == null)
+                {
+                    movieItemInfo.home_page_position.Add(new home_page_position()
+                    {
+                        positionType = 4,
+                        movieId = movieItemInfo.movieId,
+                        description = "OneEpisodeLastestUpdatedMovie",
+                        dateUpdate = DateTime.Now
+                    });
+                }
+                else
+                {
+                    weekMultiEpisodeMovie.dateUpdate = DateTime.Now;
+                }
 
+            }
         }
 
         public override void checkToAddOrUpdateMultiEpisodeLastestUpdatedMovies(movie movieItemInfo)
         {
+            var homePageContent = getHomePageContent();
+            var multiEpisodeLastestUpdatedMovieItems = homePageContent.SelectNodes(".//div[@class='tab phim-le hide'] //ul[@class='list-film'] //li");
+            if (multiEpisodeLastestUpdatedMovieItems == null) return;
+            if (isExistPositionType(movieItemInfo, multiEpisodeLastestUpdatedMovieItems, ".//div[@class='name'] //a"))
+            {
+                home_page_position multiEpisodeLastestUpdatedMovie = (home_page_position)movieItemInfo.home_page_position.FirstOrDefault(a => a.positionType == 5);
+                if (multiEpisodeLastestUpdatedMovie == null)
+                {
+                    movieItemInfo.home_page_position.Add(new home_page_position()
+                    {
+                        positionType = 5,
+                        movieId = movieItemInfo.movieId,
+                        description = "MultiEpisodeLastestUpdatedMovie",
+                        dateUpdate = DateTime.Now
+                    });
+                }
+                else
+                {
+                    multiEpisodeLastestUpdatedMovie.dateUpdate = DateTime.Now;
+                }
 
+            }
         }
 
         public override void checkToAddOrUpdateCartoonMovies(movie movieItemInfo)

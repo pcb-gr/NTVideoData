@@ -133,7 +133,8 @@ namespace NTVideoData.Victims
             foreach (HtmlNode movieItemByPositionType in movieItemsByPositionType)
             {
                 var firstName = movieItemByPositionType.SelectSingleNode(name1Selector).InnerText.Trim();
-                if (firstName.ToLower() == movieItemInfo.name1.ToLower())
+                //if (firstName.ToLower() == movieItemInfo.name1.ToLower())
+                if (firstName.ToLower().IndexOf(movieItemInfo.name1.ToLower()) != -1)
                 {
                     return true;
                 }
