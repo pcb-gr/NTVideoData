@@ -1,0 +1,6 @@
+E:\D-hard-disk\c#-workspace\NTVideoData\OpenLoadGetLink\bin\Debug\OpenLoadGetLink.exe.config
+E:\D-hard-disk\c#-workspace\NTVideoData\OpenLoadGetLink\bin\Debug\OpenLoadGetLink.exe
+E:\D-hard-disk\c#-workspace\NTVideoData\OpenLoadGetLink\bin\Debug\OpenLoadGetLink.pdb
+E:\D-hard-disk\c#-workspace\NTVideoData\OpenLoadGetLink\obj\Debug\OpenLoadGetLink.exe
+E:\D-hard-disk\c#-workspace\NTVideoData\OpenLoadGetLink\obj\Debug\OpenLoadGetLink.pdb
+E:\D-hard-disk\c#-workspace\NTVideoData\OpenLoadGetLink\obj\Debug\OpenLoadGetLink.csprojResolveAssemblyReference.cache

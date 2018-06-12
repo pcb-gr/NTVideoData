@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9fb318619b154981b2b0ca845a0e358f" Name="Diagram1" ZoomLevel="95">
+        <EntityTypeShape EntityType="NTVideoModel.actor" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="NTVideoModel.category" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="NTVideoModel.comment" Width="1.5" PointX="7.5" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NTVideoModel.country" Width="1.5" PointX="0.75" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="NTVideoModel.director" Width="1.5" PointX="0.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NTVideoModel.download" Width="1.5" PointX="7.5" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="NTVideoModel.episode" Width="1.5" PointX="7.5" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="NTVideoModel.keyword" Width="1.5" PointX="5.25" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="NTVideoModel.movie" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="NTVideoModel.trailer" Width="1.5" PointX="7.5" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NTVideoModel.upload" Width="1.5" PointX="7.5" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="NTVideoModel.victim" Width="1.5" PointX="5.25" PointY="7.375" IsExpanded="true" />
+        <AssociationConnector Association="NTVideoModel.FK_comment_victim" ManuallyRouted="false" />
+        <AssociationConnector Association="NTVideoModel.FK_download_victim" ManuallyRouted="false" />
+        <AssociationConnector Association="NTVideoModel.FK_episode_victim" ManuallyRouted="false" />
+        <AssociationConnector Association="NTVideoModel.FK_movie_keyword" ManuallyRouted="false" />
+        <AssociationConnector Association="NTVideoModel.FK_victim" ManuallyRouted="false" />
+        <AssociationConnector Association="NTVideoModel.FK_trailer_victim" ManuallyRouted="false" />
+        <AssociationConnector Association="NTVideoModel.FK_upload_victim" ManuallyRouted="false" />
+        <AssociationConnector Association="NTVideoModel.movie_actor" ManuallyRouted="false" />
+        <AssociationConnector Association="NTVideoModel.movie_category" ManuallyRouted="false" />
+        <AssociationConnector Association="NTVideoModel.movie_country" ManuallyRouted="false" />
+        <AssociationConnector Association="NTVideoModel.movie_director" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="NTVideoModel.home_page_position" Width="1.5" PointX="5.25" PointY="15.875" />
+        <AssociationConnector Association="NTVideoModel.FK_home_page_position" />
+        <EntityTypeShape EntityType="NTVideoModel.episode_need_update_to_live" Width="1.5" PointX="7.5" PointY="19.25" />
+        <AssociationConnector Association="NTVideoModel.FK_episode_need_update_to_live" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

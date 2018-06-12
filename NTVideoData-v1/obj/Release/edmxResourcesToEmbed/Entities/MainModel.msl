@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="NTVideoModelStoreContainer" CdmEntityContainer="NTVideoEntities">
+    <EntitySetMapping Name="actors">
+      <EntityTypeMapping TypeName="NTVideoModel.actor">
+        <MappingFragment StoreEntitySet="actor">
+          <ScalarProperty Name="actorId" ColumnName="actorId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="alias" ColumnName="alias" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="categories">
+      <EntityTypeMapping TypeName="NTVideoModel.category">
+        <MappingFragment StoreEntitySet="category">
+          <ScalarProperty Name="categoryId" ColumnName="categoryId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="alias" ColumnName="alias" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="comments">
+      <EntityTypeMapping TypeName="NTVideoModel.comment">
+        <MappingFragment StoreEntitySet="comment">
+          <ScalarProperty Name="commentId" ColumnName="commentId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="message" ColumnName="message" />
+          <ScalarProperty Name="victimId" ColumnName="victimId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="countries">
+      <EntityTypeMapping TypeName="NTVideoModel.country">
+        <MappingFragment StoreEntitySet="country">
+          <ScalarProperty Name="countryId" ColumnName="countryId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="flag" ColumnName="flag" />
+          <ScalarProperty Name="alias" ColumnName="alias" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="directors">
+      <EntityTypeMapping TypeName="NTVideoModel.director">
+        <MappingFragment StoreEntitySet="director">
+          <ScalarProperty Name="directorId" ColumnName="directorId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="alias" ColumnName="alias" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="downloads">
+      <EntityTypeMapping TypeName="NTVideoModel.download">
+        <MappingFragment StoreEntitySet="download">
+          <ScalarProperty Name="downloadId" ColumnName="downloadId" />
+          <ScalarProperty Name="victimId" ColumnName="victimId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="savePath" ColumnName="savePath" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="episodes">
+      <EntityTypeMapping TypeName="NTVideoModel.episode">
+        <MappingFragment StoreEntitySet="episode">
+          <ScalarProperty Name="episodeId" ColumnName="episodeId" />
+          <ScalarProperty Name="victimId" ColumnName="victimId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="groupName" ColumnName="groupName" />
+          <ScalarProperty Name="episodeHref" ColumnName="episodeHref" />
+          <ScalarProperty Name="backupHref" ColumnName="backupHref" />
+          <ScalarProperty Name="alias" ColumnName="alias" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="keywords">
+      <EntityTypeMapping TypeName="NTVideoModel.keyword">
+        <MappingFragment StoreEntitySet="keyword">
+          <ScalarProperty Name="keyWordId" ColumnName="keyWordId" />
+          <ScalarProperty Name="movieId" ColumnName="movieId" />
+          <ScalarProperty Name="keyWords" ColumnName="keyWords" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="movies">
+      <EntityTypeMapping TypeName="NTVideoModel.movie">
+        <MappingFragment StoreEntitySet="movie">
+          <ScalarProperty Name="movieId" ColumnName="movieId" />
+          <ScalarProperty Name="name1" ColumnName="name1" />
+          <ScalarProperty Name="name2" ColumnName="name2" />
+          <ScalarProperty Name="alias" ColumnName="alias" />
+          <ScalarProperty Name="isMultiEpisode" ColumnName="isMultiEpisode" />
+          <ScalarProperty Name="dateUpdate" ColumnName="dateUpdate" />
+          <ScalarProperty Name="name1CheckField" ColumnName="name1CheckField" />
+          <ScalarProperty Name="name2CheckField" ColumnName="name2CheckField" />
+          <ScalarProperty Name="publishYear" ColumnName="publishYear" />
+          <ScalarProperty Name="isPublic" ColumnName="isPublic" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="trailers">
+      <EntityTypeMapping TypeName="NTVideoModel.trailer">
+        <MappingFragment StoreEntitySet="trailer">
+          <ScalarProperty Name="trailerId" ColumnName="trailerId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="victimId" ColumnName="victimId" />
+          <ScalarProperty Name="source" ColumnName="source" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="uploads">
+      <EntityTypeMapping TypeName="NTVideoModel.upload">
+        <MappingFragment StoreEntitySet="upload">
+          <ScalarProperty Name="uploadId" ColumnName="uploadId" />
+          <ScalarProperty Name="victimId" ColumnName="victimId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="uploadPath" ColumnName="uploadPath" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="server" ColumnName="server" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="victims">
+      <EntityTypeMapping TypeName="NTVideoModel.victim">
+        <MappingFragment StoreEntitySet="victim">
+          <ScalarProperty Name="victimId" ColumnName="victimId" />
+          <ScalarProperty Name="movieId" ColumnName="movieId" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="isDefault" ColumnName="isDefault" />
+          <ScalarProperty Name="movieHref" ColumnName="movieHref" />
+          <ScalarProperty Name="thumb" ColumnName="thumb" />
+          <ScalarProperty Name="poster" ColumnName="poster" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="totalEpisode" ColumnName="totalEpisode" />
+          <ScalarProperty Name="currentEpisode" ColumnName="currentEpisode" />
+          <ScalarProperty Name="duration" ColumnName="duration" />
+          <ScalarProperty Name="quality" ColumnName="quality" />
+          <ScalarProperty Name="hasSub" ColumnName="hasSub" />
+          <ScalarProperty Name="hasDubbing" ColumnName="hasDubbing" />
+          <ScalarProperty Name="hasTrans" ColumnName="hasTrans" />
+          <ScalarProperty Name="movieDetailHref" ColumnName="movieDetailHref" />
+          <ScalarProperty Name="isContinue" ColumnName="isContinue" />
+          <ScalarProperty Name="dateUpdate" ColumnName="dateUpdate" />
+          <ScalarProperty Name="updateState" ColumnName="updateState" />
+          <ScalarProperty Name="viewed" ColumnName="viewed" />
+          <ScalarProperty Name="rating" ColumnName="rating" />
+          <ScalarProperty Name="schedule" ColumnName="schedule" />
+          <ScalarProperty Name="smallImage" ColumnName="smallImage" />
+          <ScalarProperty Name="victimTypeNo" ColumnName="victimTypeNo" />
+          <ScalarProperty Name="downloadStatus" ColumnName="downloadStatus" />
+          <ScalarProperty Name="uploadStatus" ColumnName="uploadStatus" />
+          <ScalarProperty Name="priority" ColumnName="priority" />
+          <ScalarProperty Name="isTrailer" ColumnName="isTrailer" />
+          <ScalarProperty Name="playListHtml" ColumnName="playListHtml" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="movie_actor" TypeName="NTVideoModel.movie_actor" StoreEntitySet="movie_actor">
+      <EndProperty Name="actor">
+        <ScalarProperty Name="actorId" ColumnName="actorId" />
+      </EndProperty>
+      <EndProperty Name="movie">
+        <ScalarProperty Name="movieId" ColumnName="movieId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="movie_category" TypeName="NTVideoModel.movie_category" StoreEntitySet="movie_category">
+      <EndProperty Name="category">
+        <ScalarProperty Name="categoryId" ColumnName="categoryId" />
+      </EndProperty>
+      <EndProperty Name="movie">
+        <ScalarProperty Name="movieId" ColumnName="movieId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="movie_country" TypeName="NTVideoModel.movie_country" StoreEntitySet="movie_country">
+      <EndProperty Name="country">
+        <ScalarProperty Name="countryId" ColumnName="countryId" />
+      </EndProperty>
+      <EndProperty Name="movie">
+        <ScalarProperty Name="movieId" ColumnName="movieId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="movie_director" TypeName="NTVideoModel.movie_director" StoreEntitySet="movie_director">
+      <EndProperty Name="director">
+        <ScalarProperty Name="directorId" ColumnName="directorId" />
+      </EndProperty>
+      <EndProperty Name="movie">
+        <ScalarProperty Name="movieId" ColumnName="movieId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <EntitySetMapping Name="home_page_position">
+      <EntityTypeMapping TypeName="NTVideoModel.home_page_position">
+        <MappingFragment StoreEntitySet="home_page_position">
+          <ScalarProperty Name="dateUpdate" ColumnName="dateUpdate" />
+          <ScalarProperty Name="movieId" ColumnName="movieId" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="positionType" ColumnName="positionType" />
+          <ScalarProperty Name="homePagePositionId" ColumnName="homePagePositionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

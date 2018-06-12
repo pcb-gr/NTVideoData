@@ -1,0 +1,12 @@
+E:\D-hard-disk\c#-workspace\NTVideoData\NTVideoData-v1\bin\Release\NTVideoData-v1.exe.config
+E:\D-hard-disk\c#-workspace\NTVideoData\NTVideoData-v1\bin\Release\NTVideoData-v1.exe
+E:\D-hard-disk\c#-workspace\NTVideoData\NTVideoData-v1\bin\Release\NTVideoData-v1.pdb
+E:\D-hard-disk\c#-workspace\NTVideoData\NTVideoData-v1\bin\Release\EntityFramework.dll
+E:\D-hard-disk\c#-workspace\NTVideoData\NTVideoData-v1\bin\Release\MySql.Data.dll
+E:\D-hard-disk\c#-workspace\NTVideoData\NTVideoData-v1\bin\Release\MySql.Data.Entity.EF6.dll
+E:\D-hard-disk\c#-workspace\NTVideoData\NTVideoData-v1\obj\Release\NTVideoData.csprojResolveAssemblyReference.cache
+E:\D-hard-disk\c#-workspace\NTVideoData\NTVideoData-v1\obj\Release\NTVideoData.MainForm.resources
+E:\D-hard-disk\c#-workspace\NTVideoData\NTVideoData-v1\obj\Release\NTVideoData_v1.Properties.Resources.resources
+E:\D-hard-disk\c#-workspace\NTVideoData\NTVideoData-v1\obj\Release\NTVideoData.csproj.GenerateResource.Cache
+E:\D-hard-disk\c#-workspace\NTVideoData\NTVideoData-v1\obj\Release\NTVideoData-v1.exe
+E:\D-hard-disk\c#-workspace\NTVideoData\NTVideoData-v1\obj\Release\NTVideoData-v1.pdb

@@ -1,0 +1,490 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NTVideoModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="actor">
+    <Key>
+      <PropertyRef Name="actorId" />
+    </Key>
+    <Property Name="actorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="200" />
+    <Property Name="alias" Type="varchar" MaxLength="400" />
+  </EntityType>
+  <EntityType Name="category">
+    <Key>
+      <PropertyRef Name="categoryId" />
+    </Key>
+    <Property Name="categoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="500" />
+    <Property Name="alias" Type="varchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="comment">
+    <Key>
+      <PropertyRef Name="commentId" />
+    </Key>
+    <Property Name="commentId" Type="int" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="100" />
+    <Property Name="message" Type="text" />
+    <Property Name="victimId" Type="int" />
+  </EntityType>
+  <EntityType Name="country">
+    <Key>
+      <PropertyRef Name="countryId" />
+    </Key>
+    <Property Name="countryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="500" />
+    <Property Name="flag" Type="varchar" MaxLength="1000" />
+    <Property Name="alias" Type="varchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="director">
+    <Key>
+      <PropertyRef Name="directorId" />
+    </Key>
+    <Property Name="directorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="200" />
+    <Property Name="alias" Type="varchar" MaxLength="400" />
+  </EntityType>
+  <EntityType Name="download">
+    <Key>
+      <PropertyRef Name="downloadId" />
+    </Key>
+    <Property Name="downloadId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="victimId" Type="int" />
+    <Property Name="name" Type="varchar" MaxLength="1000" />
+    <Property Name="savePath" Type="varchar" MaxLength="5000" />
+    <Property Name="status" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="episode">
+    <Key>
+      <PropertyRef Name="episodeId" />
+    </Key>
+    <Property Name="episodeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="victimId" Type="int" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="groupName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="episodeHref" Type="varchar" MaxLength="5000" />
+    <Property Name="backupHref" Type="varchar" MaxLength="5000" />
+    <Property Name="alias" Type="varchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="episode_need_update_to_live">
+    <Key>
+      <PropertyRef Name="episodeUpdateToLiveId" />
+    </Key>
+    <Property Name="episodeUpdateToLiveId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="victimId" Type="int" />
+    <Property Name="serverIndex" Type="int" />
+    <Property Name="episodeIndex" Type="int" />
+    <Property Name="dateCreate" Type="datetime" Precision="0" StoreGeneratedPattern="Identity" />
+    <Property Name="status" Type="int" />
+  </EntityType>
+  <EntityType Name="home_page_position">
+    <Key>
+      <PropertyRef Name="homePagePositionId" />
+    </Key>
+    <Property Name="homePagePositionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="positionType" Type="int" />
+    <Property Name="description" Type="varchar" MaxLength="100" />
+    <Property Name="movieId" Type="int" />
+    <Property Name="dateUpdate" Type="datetime" Precision="0" />
+  </EntityType>
+  <EntityType Name="keyword">
+    <Key>
+      <PropertyRef Name="keyWordId" />
+    </Key>
+    <Property Name="keyWordId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="movieId" Type="int" />
+    <Property Name="keyWords" Type="text" />
+  </EntityType>
+  <EntityType Name="movie">
+    <Key>
+      <PropertyRef Name="movieId" />
+    </Key>
+    <Property Name="movieId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name1" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="name2" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="alias" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="isMultiEpisode" Type="int" />
+    <Property Name="dateUpdate" Type="timestamp" Precision="0" />
+    <Property Name="name1CheckField" Type="varchar" MaxLength="500" />
+    <Property Name="name2CheckField" Type="varchar" MaxLength="500" />
+    <Property Name="publishYear" Type="int" />
+    <Property Name="isPublic" Type="int" />
+  </EntityType>
+  <EntityType Name="movie_actor">
+    <Key>
+      <PropertyRef Name="movieId" />
+      <PropertyRef Name="actorId" />
+    </Key>
+    <Property Name="movieId" Type="int" Nullable="false" />
+    <Property Name="actorId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="movie_category">
+    <Key>
+      <PropertyRef Name="movieId" />
+      <PropertyRef Name="categoryId" />
+    </Key>
+    <Property Name="movieId" Type="int" Nullable="false" />
+    <Property Name="categoryId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="movie_country">
+    <Key>
+      <PropertyRef Name="movieId" />
+      <PropertyRef Name="countryId" />
+    </Key>
+    <Property Name="movieId" Type="int" Nullable="false" />
+    <Property Name="countryId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="movie_director">
+    <Key>
+      <PropertyRef Name="movieId" />
+      <PropertyRef Name="directorId" />
+    </Key>
+    <Property Name="movieId" Type="int" Nullable="false" />
+    <Property Name="directorId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="trailer">
+    <Key>
+      <PropertyRef Name="trailerId" />
+    </Key>
+    <Property Name="trailerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="1000" />
+    <Property Name="victimId" Type="int" />
+    <Property Name="source" Type="varchar" MaxLength="5000" />
+  </EntityType>
+  <EntityType Name="upload">
+    <Key>
+      <PropertyRef Name="uploadId" />
+    </Key>
+    <Property Name="uploadId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="victimId" Type="int" />
+    <Property Name="name" Type="varchar" MaxLength="1000" />
+    <Property Name="uploadPath" Type="varchar" MaxLength="5000" />
+    <Property Name="status" Type="varchar" MaxLength="10" />
+    <Property Name="server" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="victim">
+    <Key>
+      <PropertyRef Name="victimId" />
+    </Key>
+    <Property Name="victimId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="movieId" Type="int" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
+    <Property Name="isDefault" Type="int" />
+    <Property Name="movieHref" Type="varchar" MaxLength="1000" />
+    <Property Name="thumb" Type="varchar" MaxLength="1000" />
+    <Property Name="poster" Type="varchar" MaxLength="1000" />
+    <Property Name="description" Type="text" />
+    <Property Name="totalEpisode" Type="int" />
+    <Property Name="currentEpisode" Type="int" />
+    <Property Name="duration" Type="varchar" MaxLength="50" />
+    <Property Name="quality" Type="varchar" MaxLength="50" />
+    <Property Name="hasSub" Type="int" />
+    <Property Name="hasDubbing" Type="int" />
+    <Property Name="hasTrans" Type="int" />
+    <Property Name="movieDetailHref" Type="varchar" MaxLength="1000" />
+    <Property Name="isContinue" Type="int" />
+    <Property Name="dateUpdate" Type="timestamp" Precision="0" />
+    <Property Name="updateState" Type="int" />
+    <Property Name="viewed" Type="int" />
+    <Property Name="rating" Type="double" />
+    <Property Name="schedule" Type="text" />
+    <Property Name="smallImage" Type="varchar" MaxLength="1000" />
+    <Property Name="victimTypeNo" Type="int" />
+    <Property Name="downloadStatus" Type="varchar" MaxLength="50" />
+    <Property Name="uploadStatus" Type="varchar" MaxLength="50" />
+    <Property Name="priority" Type="int" />
+    <Property Name="isTrailer" Type="int" />
+    <Property Name="playListHtml" Type="longtext" />
+    <Property Name="playListHtmlBk" Type="longtext" />
+  </EntityType>
+  <Association Name="FK_comment_victim">
+    <End Role="victim" Type="Self.victim" Multiplicity="0..1" />
+    <End Role="comment" Type="Self.comment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="victim">
+        <PropertyRef Name="victimId" />
+      </Principal>
+      <Dependent Role="comment">
+        <PropertyRef Name="victimId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_download_victim">
+    <End Role="victim" Type="Self.victim" Multiplicity="0..1" />
+    <End Role="download" Type="Self.download" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="victim">
+        <PropertyRef Name="victimId" />
+      </Principal>
+      <Dependent Role="download">
+        <PropertyRef Name="victimId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_episode_need_update_to_live">
+    <End Role="victim" Type="Self.victim" Multiplicity="0..1" />
+    <End Role="episode_need_update_to_live" Type="Self.episode_need_update_to_live" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="victim">
+        <PropertyRef Name="victimId" />
+      </Principal>
+      <Dependent Role="episode_need_update_to_live">
+        <PropertyRef Name="victimId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_episode_victim">
+    <End Role="victim" Type="Self.victim" Multiplicity="1" />
+    <End Role="episode" Type="Self.episode" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="victim">
+        <PropertyRef Name="victimId" />
+      </Principal>
+      <Dependent Role="episode">
+        <PropertyRef Name="victimId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_home_page_position">
+    <End Role="movie" Type="Self.movie" Multiplicity="0..1" />
+    <End Role="home_page_position" Type="Self.home_page_position" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="movie">
+        <PropertyRef Name="movieId" />
+      </Principal>
+      <Dependent Role="home_page_position">
+        <PropertyRef Name="movieId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_movie_actor_actor">
+    <End Role="actor" Type="Self.actor" Multiplicity="1" />
+    <End Role="movie_actor" Type="Self.movie_actor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="actor">
+        <PropertyRef Name="actorId" />
+      </Principal>
+      <Dependent Role="movie_actor">
+        <PropertyRef Name="actorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_movie_actor_movie">
+    <End Role="movie" Type="Self.movie" Multiplicity="1" />
+    <End Role="movie_actor" Type="Self.movie_actor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="movie">
+        <PropertyRef Name="movieId" />
+      </Principal>
+      <Dependent Role="movie_actor">
+        <PropertyRef Name="movieId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_movie_category_category">
+    <End Role="category" Type="Self.category" Multiplicity="1" />
+    <End Role="movie_category" Type="Self.movie_category" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="category">
+        <PropertyRef Name="categoryId" />
+      </Principal>
+      <Dependent Role="movie_category">
+        <PropertyRef Name="categoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_movie_category_movie">
+    <End Role="movie" Type="Self.movie" Multiplicity="1" />
+    <End Role="movie_category" Type="Self.movie_category" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="movie">
+        <PropertyRef Name="movieId" />
+      </Principal>
+      <Dependent Role="movie_category">
+        <PropertyRef Name="movieId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_movie_country_country">
+    <End Role="country" Type="Self.country" Multiplicity="1" />
+    <End Role="movie_country" Type="Self.movie_country" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="country">
+        <PropertyRef Name="countryId" />
+      </Principal>
+      <Dependent Role="movie_country">
+        <PropertyRef Name="countryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_movie_country_movie">
+    <End Role="movie" Type="Self.movie" Multiplicity="1" />
+    <End Role="movie_country" Type="Self.movie_country" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="movie">
+        <PropertyRef Name="movieId" />
+      </Principal>
+      <Dependent Role="movie_country">
+        <PropertyRef Name="movieId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_movie_director_director">
+    <End Role="director" Type="Self.director" Multiplicity="1" />
+    <End Role="movie_director" Type="Self.movie_director" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="director">
+        <PropertyRef Name="directorId" />
+      </Principal>
+      <Dependent Role="movie_director">
+        <PropertyRef Name="directorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_movie_director_movie">
+    <End Role="movie" Type="Self.movie" Multiplicity="1" />
+    <End Role="movie_director" Type="Self.movie_director" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="movie">
+        <PropertyRef Name="movieId" />
+      </Principal>
+      <Dependent Role="movie_director">
+        <PropertyRef Name="movieId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_movie_keyword">
+    <End Role="movie" Type="Self.movie" Multiplicity="0..1" />
+    <End Role="keyword" Type="Self.keyword" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="movie">
+        <PropertyRef Name="movieId" />
+      </Principal>
+      <Dependent Role="keyword">
+        <PropertyRef Name="movieId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_trailer_victim">
+    <End Role="victim" Type="Self.victim" Multiplicity="0..1" />
+    <End Role="trailer" Type="Self.trailer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="victim">
+        <PropertyRef Name="victimId" />
+      </Principal>
+      <Dependent Role="trailer">
+        <PropertyRef Name="victimId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_upload_victim">
+    <End Role="victim" Type="Self.victim" Multiplicity="0..1" />
+    <End Role="upload" Type="Self.upload" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="victim">
+        <PropertyRef Name="victimId" />
+      </Principal>
+      <Dependent Role="upload">
+        <PropertyRef Name="victimId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_victim">
+    <End Role="movie" Type="Self.movie" Multiplicity="0..1" />
+    <End Role="victim" Type="Self.victim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="movie">
+        <PropertyRef Name="movieId" />
+      </Principal>
+      <Dependent Role="victim">
+        <PropertyRef Name="movieId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="NTVideoModelStoreContainer">
+    <EntitySet Name="actor" EntityType="Self.actor" Schema="nt_pcb_1_4" store:Type="Tables" />
+    <EntitySet Name="category" EntityType="Self.category" Schema="nt_pcb_1_4" store:Type="Tables" />
+    <EntitySet Name="comment" EntityType="Self.comment" Schema="nt_pcb_1_4" store:Type="Tables" />
+    <EntitySet Name="country" EntityType="Self.country" Schema="nt_pcb_1_4" store:Type="Tables" />
+    <EntitySet Name="director" EntityType="Self.director" Schema="nt_pcb_1_4" store:Type="Tables" />
+    <EntitySet Name="download" EntityType="Self.download" Schema="nt_pcb_1_4" store:Type="Tables" />
+    <EntitySet Name="episode" EntityType="Self.episode" Schema="nt_pcb_1_4" store:Type="Tables" />
+    <EntitySet Name="episode_need_update_to_live" EntityType="Self.episode_need_update_to_live" Schema="nt_pcb_1_4" store:Type="Tables" />
+    <EntitySet Name="home_page_position" EntityType="Self.home_page_position" Schema="nt_pcb_1_4" store:Type="Tables" />
+    <EntitySet Name="keyword" EntityType="Self.keyword" Schema="nt_pcb_1_4" store:Type="Tables" />
+    <EntitySet Name="movie" EntityType="Self.movie" Schema="nt_pcb_1_4" store:Type="Tables" />
+    <EntitySet Name="movie_actor" EntityType="Self.movie_actor" Schema="nt_pcb_1_4" store:Type="Tables" />
+    <EntitySet Name="movie_category" EntityType="Self.movie_category" Schema="nt_pcb_1_4" store:Type="Tables" />
+    <EntitySet Name="movie_country" EntityType="Self.movie_country" Schema="nt_pcb_1_4" store:Type="Tables" />
+    <EntitySet Name="movie_director" EntityType="Self.movie_director" Schema="nt_pcb_1_4" store:Type="Tables" />
+    <EntitySet Name="trailer" EntityType="Self.trailer" Schema="nt_pcb_1_4" store:Type="Tables" />
+    <EntitySet Name="upload" EntityType="Self.upload" Schema="nt_pcb_1_4" store:Type="Tables" />
+    <EntitySet Name="victim" EntityType="Self.victim" Schema="nt_pcb_1_4" store:Type="Tables" />
+    <AssociationSet Name="FK_comment_victim" Association="Self.FK_comment_victim">
+      <End Role="victim" EntitySet="victim" />
+      <End Role="comment" EntitySet="comment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_download_victim" Association="Self.FK_download_victim">
+      <End Role="victim" EntitySet="victim" />
+      <End Role="download" EntitySet="download" />
+    </AssociationSet>
+    <AssociationSet Name="FK_episode_need_update_to_live" Association="Self.FK_episode_need_update_to_live">
+      <End Role="victim" EntitySet="victim" />
+      <End Role="episode_need_update_to_live" EntitySet="episode_need_update_to_live" />
+    </AssociationSet>
+    <AssociationSet Name="FK_episode_victim" Association="Self.FK_episode_victim">
+      <End Role="victim" EntitySet="victim" />
+      <End Role="episode" EntitySet="episode" />
+    </AssociationSet>
+    <AssociationSet Name="FK_home_page_position" Association="Self.FK_home_page_position">
+      <End Role="movie" EntitySet="movie" />
+      <End Role="home_page_position" EntitySet="home_page_position" />
+    </AssociationSet>
+    <AssociationSet Name="FK_movie_actor_actor" Association="Self.FK_movie_actor_actor">
+      <End Role="actor" EntitySet="actor" />
+      <End Role="movie_actor" EntitySet="movie_actor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_movie_actor_movie" Association="Self.FK_movie_actor_movie">
+      <End Role="movie" EntitySet="movie" />
+      <End Role="movie_actor" EntitySet="movie_actor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_movie_category_category" Association="Self.FK_movie_category_category">
+      <End Role="category" EntitySet="category" />
+      <End Role="movie_category" EntitySet="movie_category" />
+    </AssociationSet>
+    <AssociationSet Name="FK_movie_category_movie" Association="Self.FK_movie_category_movie">
+      <End Role="movie" EntitySet="movie" />
+      <End Role="movie_category" EntitySet="movie_category" />
+    </AssociationSet>
+    <AssociationSet Name="FK_movie_country_country" Association="Self.FK_movie_country_country">
+      <End Role="country" EntitySet="country" />
+      <End Role="movie_country" EntitySet="movie_country" />
+    </AssociationSet>
+    <AssociationSet Name="FK_movie_country_movie" Association="Self.FK_movie_country_movie">
+      <End Role="movie" EntitySet="movie" />
+      <End Role="movie_country" EntitySet="movie_country" />
+    </AssociationSet>
+    <AssociationSet Name="FK_movie_director_director" Association="Self.FK_movie_director_director">
+      <End Role="director" EntitySet="director" />
+      <End Role="movie_director" EntitySet="movie_director" />
+    </AssociationSet>
+    <AssociationSet Name="FK_movie_director_movie" Association="Self.FK_movie_director_movie">
+      <End Role="movie" EntitySet="movie" />
+      <End Role="movie_director" EntitySet="movie_director" />
+    </AssociationSet>
+    <AssociationSet Name="FK_movie_keyword" Association="Self.FK_movie_keyword">
+      <End Role="movie" EntitySet="movie" />
+      <End Role="keyword" EntitySet="keyword" />
+    </AssociationSet>
+    <AssociationSet Name="FK_trailer_victim" Association="Self.FK_trailer_victim">
+      <End Role="victim" EntitySet="victim" />
+      <End Role="trailer" EntitySet="trailer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_upload_victim" Association="Self.FK_upload_victim">
+      <End Role="victim" EntitySet="victim" />
+      <End Role="upload" EntitySet="upload" />
+    </AssociationSet>
+    <AssociationSet Name="FK_victim" Association="Self.FK_victim">
+      <End Role="movie" EntitySet="movie" />
+      <End Role="victim" EntitySet="victim" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
