@@ -22,17 +22,17 @@ namespace NTVideoData.Victims
             victimMediaDomain = "";
             victimTypeNo = 3;
             victimMediaController += victimTypeNo + "/";
-            destToGetUrls[0] = protocol + victimDomain + "/phim-moi/";
-            destToGetUrls[1] = protocol + victimDomain + "/phim-le/";
-            destToGetUrls[2] = protocol + victimDomain + "/phim-bo/";
-            destToGetUrls[3] = protocol + victimDomain + "/phim-moi/";
-            pageIndexParam = "page/";
+            destToGetUrls[0] = protocol + victimDomain + "/phim-moi";
+            destToGetUrls[1] = protocol + victimDomain + "/phim-le";
+            destToGetUrls[2] = protocol + victimDomain + "/phim-bo";
+            destToGetUrls[3] = protocol + victimDomain + "/phim-moi";
+            pageIndexParam = "page";
         }
 
         public override HtmlNodeCollection getItemsInPage(int pageIndex)
         {
-            currentDestToGetUrl = currentDestToGetUrl.Substring(0, currentDestToGetUrl.LastIndexOf("/") + 1) + pageIndex;
-            var ul = WebParserUtil.selectNodes(currentDestToGetUrl, "//ul[@class='list-film']");
+            var getUrl = currentDestToGetUrl + "/" + pageIndexParam + "/" + pageIndex;
+            var ul = WebParserUtil.selectNodes(getUrl, "//ul[@class='list-film']");
             return ul[0].SelectNodes(".//li");
         }
 
@@ -192,9 +192,9 @@ namespace NTVideoData.Victims
                 {
                     name = victimDomain,
                     movieHref = movieHref,
-                    thumb = CryptoUtil.encrypt(smallImage),
-                    poster = CryptoUtil.encrypt(smallImage),
-                    smallImage = CryptoUtil.encrypt(smallImage),
+                    thumb = smallImage,
+                    poster = smallImage,
+                    smallImage = smallImage,
                     description = description.InnerHtml,
                     currentEpisode = currentEpisode,
                     totalEpisode = totalEpisode,
