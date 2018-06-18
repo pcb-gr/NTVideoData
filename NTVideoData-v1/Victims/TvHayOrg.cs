@@ -139,10 +139,6 @@ namespace NTVideoData.Victims
                 HtmlNodeCollection dd = blockbody.SelectNodes("//dd");
                 var currentMovieInfo = dd[0].InnerText.Trim().ToLower().Replace("bản đẹp", "HD").ToLower();
                 var smallImage = blockbody.SelectSingleNode(".//div[@class='poster'] //img").Attributes["src"].Value;
-                if (smallImage.IndexOf(victimDomainNoExt) != -1)
-                {
-                    smallImage = UriUtil.getUrlNoDomain(smallImage);
-                }
                 var movieHref = UriUtil.checkAndAddDomain(blockbody.SelectSingleNode(".//a[@class='btn-watch']").Attributes["href"].Value, victimDomain, protocol);
                 var totalEpisode = 1;
                 var isContinue = 0;
